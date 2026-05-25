@@ -44,13 +44,8 @@ resource "aws_dynamodb_table" "main" {
     enabled = true
   }
 
-  dynamic "stream_specification" {
-    for_each = var.enable_streams ? [1] : []
-    content {
-      stream_enabled   = true
-      stream_view_type = var.stream_view_type
-    }
-  }
+  stream_enabled   = var.enable_streams
+  stream_view_type = var.enable_streams ? var.stream_view_type : null
 
   tags = {
     Name = var.table_name
