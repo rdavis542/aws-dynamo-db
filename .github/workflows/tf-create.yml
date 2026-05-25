@@ -7,6 +7,11 @@ on:
   pull_request:
     branches: ["main"]
   workflow_dispatch:
+    inputs:
+      plan_only:
+        description: 'Run plan only, skip apply'
+        type: boolean
+        default: false
 
 jobs:
   terraform:
@@ -17,4 +22,5 @@ jobs:
       id-token: write
     with:
       aws_region: us-east-2
+      plan_only: ${{ github.event.inputs.plan_only == 'true' }}
     secrets: inherit
